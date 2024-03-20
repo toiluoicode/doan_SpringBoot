@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>My App</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Electro - HTML Ecommerce Template</title>
+    <link th:fragment="link-css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+
+    <link th:fragment="link-css"  type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+
+
+    <link th:fragment="link-css" type="text/css" rel="stylesheet" th:href="@{/css/slick.css}"/>
+    <link th:fragment="link-css" type="text/css" rel="stylesheet" th:href="@{/css/slick-theme.css}"/>
+
+
+    <link th:fragment="link-css" type="text/css" rel="stylesheet" th:href="@{/css/nouislider.min.css}"/>
+
+
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+
+
+    <link th:fragment="link-css" type="text/css" rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!--<header th:fragment ="header">
+    <nav class="navbar navbar-expend-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">HUTECH</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/books">List Book</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/books/add">Add Book</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/category">List Category</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/category/add">Add Category</a></li>
+                    <li sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="btn btn-outline-primary" type="submit">Logout</button>
+                        </form>
+                    </li>
+                    <li sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-outline-primary" href="/login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>-->
+<header th:fragment="header">
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-left">
+                <!--<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
+                <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+                <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>-->
+            </ul>
+            <ul class="header-links pull-right">
+                <li><a href="#"><i class="fa fa-dollar"></i> VND</a></li>
+                <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a th:href="@{/}" class="logo">
+                            <img src="./img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <div class="col-md-6">
+                    <div class="header-search">
+                        <form>
+                            <input class="input" placeholder="Search here" name="keyword">
+                            <button class="search-btn">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+
+                        <div>
+                            <a href="#">
+                                <i class="fa fa-heart-o"></i>
+                                <span>Your Wishlist</span>
+                                <div class="qty">2</div>
+                            </a>
+                        </div>
+<!--                         /Wishlist -->
+
+
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Your Cart</span>
+                                <div class="qty" th:text="${count}"></div>
+                            </a>
+                            <div class="cart-dropdown" >
+                                <div class="cart-list">
+                                    <div class="product-widget">
+                                        <div class="product-img">
+                                            <img src="./img/product01.png" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+                                        </div>
+                                        <button class="delete"><i class="fa fa-close"></i></button>
+                                    </div>
+                                </div>
+                                <div class="cart-summary">
+                                    <small>3 Item(s) selected</small>
+                                    <h5>SUBTOTAL: $2940.00</h5>
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="#">View Cart</a>
+                                    <a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Cart -->
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>
+<!-- /HEADER -->
+<div th:insert="~{::${content}}">
+
+</div>
+<!--<footer th:fragment="footer">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</footer>-->
+<!-- FOOTER -->
+<footer th:fragment="footer" id="footer">
+    <!-- top footer -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">Hỗ trợ</h3>
+                        <p>Cảm ơn bạn đã sử dụng sản phẩm của chúng tôi.</p>
+                        <ul class="footer-links">
+                            <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
+                            <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
+                            <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">Sản Phẩm & Dịch Vụ</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Thiết Bị Âm Thanh</a></li>
+                            <li><a href="#">Laptops</a></li>
+                            <li><a href="#">Điện Thoại Thông Minh</a></li>
+                            <li><a href="#">Cameras</a></li>
+                            <li><a href="#">Máy Tính Bảng</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="clearfix visible-xs"></div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">Giới thiệu về chúng tôi</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Thông tin về công ty</a></li>
+                            <li><a href="#">Lĩnh vực kinh doanh</a></li>
+                            <li><a href="#">Nghề nghiệp</a></li>
+                            <li><a href="#">Quan hệ nhà đầu tư</a></li>
+                            <li><a href="#">Khám phá</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">Tài khoản & Cộng đồng</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Tài khoản của tôi</a></li>
+                            <li><a href="#">Đơn hàng</a></li>
+                            <li><a href="#">Danh sách yêu thích</a></li>
+                            <li><a href="#">Trợ năng</a></li>
+                            <li><a href="#">Điều khoản & Dịch vụ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /top footer -->
+
+    <!-- bottom footer -->
+    <div id="bottom-footer" class="section">
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <ul class="footer-payments">
+                        <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+                        <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
+                        <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
+                        <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+                        <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
+                        <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+                    </ul>
+                    <span class="copyright">
+								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+								Copyright &copy;<script>document.write(new Date().getFullYear());</script> Đồ án được thực hiện bởi <i
+                            class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                                                target="_blank">Võ Minh Thuận - Mai Bảo Ngọc - Trần Minh Đức</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							</span>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /bottom footer -->
+</footer>
+<!-- /FOOTER -->
+
+<!-- jQuery Plugins -->
+<div th:fragment="js_bundle">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/slick.min.js}"></script>
+    <script th:src="@{/js/nouislider.min.js}"></script>
+    <script th:src="@{/js/jquery.zoom.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</div>
+</body>
+</html>

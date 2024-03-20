@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<head th:replace="~{layout :: head}">
+
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="container">
+    <h1 th:text=${title}></h1>
+    <a th:href="@{/products/add}" class="btn btn-primary btn-sm mb-3">Add new Product</a>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Action</th>
+                  <th sec:authorize="hasAnyAuthority('ADMIN')">Action</th>
+        </tr>
+        <tr th:each="product : ${listProduct}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td>
+                <img style="width: 100px; height: 100px" th:src="@{/img/}+ ${product.image}">
+            </td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.category.name}"></td>
+            <td>
+                <a th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a>
+                <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post" onsubmit="return confirm('Are you sure?')">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item pagination"
+                th:if="${listProduct.totalPages > 0}"
+                th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link"
+                   th:href="@{/products(page=${pageNumber},size=${listProduct.size})}"
+                   th:classappend="${pageNumber==listProduct.number + 1} ? active"
+                   th:text="${pageNumber}"
+                ></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="mb-3">
+        <label for="size_option" class="form-label">Số lượng mỗi
+            trang</label>
+        <br>
+        <select class="form-select" name="size" id="size_option"
+                onchange="getval(this);">
+            <option selected value="0">Select row</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+        </select>
+    </div>
+
+</div>
+
+
+
+
+<script th:src="@{/js/jquery-3.6.4.min.js}"></script>
+<script th:inline="javascript">
+    function deleteBook(link) {
+        if (confirm('Are you sure?')) {
+            $.ajax({
+                url: $(link).attr('href'),
+                type: 'DELETE',
+                success: result => {
+                    if (!result.success) {
+                        alert(result.message);
+                    } else {
+                        $(link).parent().parent().remove();
+                    }
+                }
+            });
+        }
+    }
+    function getval(sel) {
+        window.location.replace("http://localhost:8081/products?page=1&size=" + sel.value);
+    }
+</script>
+
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

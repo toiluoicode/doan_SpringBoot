@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}">
+
+</head>
+<body>
+<th:block th:replace="~{layout :: header}"></th:block>
+<div class="container">
+  <h1>Edit Book</h1>
+  <form th:action="@{/products/add}" th:object="${product}" method="post" ENCTYPE="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <div class="col-6 mb-3">
+      <label class="form-label" for="title">Title:</label>
+      <input class="form-control" type="text" th:field="*{name}" id="title">
+      <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </div>
+    <div class="col-6 mb-3">
+      <img class="form-control" style="height: 100px;width: 100px" th:src="@{/img/} + *{image}" placeholder="image"/>
+      <input class="form-control" type="file"  accept="image/png, image/jpeg" name="ImageProduct">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="price">Price:</label>
+      <input class="form-control" type="text" th:field="*{price}" id="price">
+      <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="category">Category:</label>
+      <select class="form-control" name="category.id" id="category">
+        <option value="">-- Chọn danh mục --</option>
+        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}" th:selected="${category.id == product.category.id}"></option>
+      </select>
+      <span class="text-danger" th:if="${#fields.hasErrors('category.id')}" th:errors="*{category}"></span>
+    </div>
+    <input type="submit" value="Save">
+  </form>
+  <br>
+  <a th:href="@{/products}">Back to List</a>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
